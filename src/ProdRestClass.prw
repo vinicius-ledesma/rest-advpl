@@ -2,17 +2,17 @@
 #INCLUDE "restful.ch"
 
 //-------------------------------------------------------------------
-/*/{Protheus.doc} ContTypeRestClass
-Classe WSRESTFul com SetContentType no método
+/*/{Protheus.doc} ProdRestClass
+Classe WSRESTFul com Produces no método
 
 @author Vinicius Ledesma
 @since 22/05/2020
 /*/
 //-------------------------------------------------------------------
 
-WSRESTFUL ContTypeRestClass DESCRIPTION "API REST com SetContentType no método."
+WSRESTFUL ProdRestClass DESCRIPTION "API REST com Produces no método."
 
-WSMETHOD GET DESCRIPTION "Get simples sem nenhuma configuração."
+WSMETHOD GET DESCRIPTION "Get simples sem nenhuma configuração." PRODUCES APPLICATION_JSON
 
 END WSRESTFUL
 
@@ -24,7 +24,6 @@ Get simples sem nenhuma configuração.
 @since 22/05/2020
 /*/
 //-------------------------------------------------------------------
-WSMETHOD GET WSSERVICE ContTypeRestClass
-    ::SetContentType('application/json')
-    ::SetResponse('{"ContTypeRestClass":"Success"}')
+WSMETHOD GET WSSERVICE ProdRestClass
+    ::SetResponse('{"ProdRestClass":"Success"}')
 Return .T.

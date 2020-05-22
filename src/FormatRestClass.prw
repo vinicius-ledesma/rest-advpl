@@ -2,15 +2,15 @@
 #INCLUDE "restful.ch"
 
 //-------------------------------------------------------------------
-/*/{Protheus.doc} ContTypeRestClass
-Classe WSRESTFul com SetContentType no método
+/*/{Protheus.doc} FormatRestClass
+Classe WSRESTFul com Format na classe
 
 @author Vinicius Ledesma
 @since 22/05/2020
 /*/
 //-------------------------------------------------------------------
 
-WSRESTFUL ContTypeRestClass DESCRIPTION "API REST com SetContentType no método."
+WSRESTFUL FormatRestClass DESCRIPTION "API REST com Format na classe." FORMAT "application/json"
 
 WSMETHOD GET DESCRIPTION "Get simples sem nenhuma configuração."
 
@@ -24,7 +24,6 @@ Get simples sem nenhuma configuração.
 @since 22/05/2020
 /*/
 //-------------------------------------------------------------------
-WSMETHOD GET WSSERVICE ContTypeRestClass
-    ::SetContentType('application/json')
-    ::SetResponse('{"ContTypeRestClass":"Success"}')
+WSMETHOD GET WSSERVICE FormatRestClass
+    ::SetResponse('{"FormatRestClass":"Success"}')
 Return .T.
