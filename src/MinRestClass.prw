@@ -3,22 +3,22 @@
 
 //-------------------------------------------------------------------
 /*/{Protheus.doc} MinRestClass
-Classe WSRESTFul inicial com o m√≠nimo necess√°rio
+Classe WSRESTFul inicial com o mÌnimo necess·rio
 
 @author Vinicius Ledesma
 @since 18/05/2020
 /*/
 //-------------------------------------------------------------------
 
-WSRESTFUL MinRestClass DESCRIPTION "API REST com o m√≠nimo necess√°rio."
+WSRESTFUL MinRestClass DESCRIPTION "API REST com o mÌnimo necess·rio."
 
-WSMETHOD GET DESCRIPTION "Get simples sem nenhuma configura√ß√£o."
+WSMETHOD GET DESCRIPTION "Get simples sem nenhuma configuraÁ„o."
 
 END WSRESTFUL
 
 //-------------------------------------------------------------------
 /*/{Protheus.doc} GET
-Get simples sem nenhuma configura√ß√£o.
+Get simples sem nenhuma configuraÁ„o.
 
 @author Vinicius Ledesma
 @since 18/05/2020
