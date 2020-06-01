@@ -2,103 +2,86 @@
 #INCLUDE "restful.ch"
 
 //-------------------------------------------------------------------
-/*/{Protheus.doc} GetRestClass
-Exemplo de GET
+/*/{Protheus.doc} DoisGetsRestClass
+Exemplo com dois GETs
 
 @author Vinicius Ledesma
 @since 01/06/2020
 /*/
 //-------------------------------------------------------------------
 
-WSRESTFUL GetRestClass DESCRIPTION "Exemplo de GET." FORMAT "application/json"
+WSRESTFUL DoisGetsRestClass DESCRIPTION "Exemplo com dois GETs." FORMAT "application/json"
 
 WSDATA pageSize         AS INTEGER   OPTIONAL
 WSDATA page             AS INTEGER   OPTIONAL
 WSDATA meuFiltro        AS CHARACTER OPTIONAL
 
-WSMETHOD GET DESCRIPTION "Get simples com syntax" ;
-    WSSYNTAX "/GetRestClass || /GetRestClass/{id}" ;
+WSMETHOD GET UM DESCRIPTION "Get específico com path e syntax." ;
+    WSSYNTAX "/DoisGetsRestClass" ;
+    PATH "" ;
+    PRODUCES APPLICATION_JSON
+
+WSMETHOD GET LISTA DESCRIPTION "Get lista com path e syntax." ;
+    WSSYNTAX "/DoisGetsRestClass/{id}" ;
+    PATH "/{id}" ;
     PRODUCES APPLICATION_JSON
 
 END WSRESTFUL
 
 //-------------------------------------------------------------------
-/*/{Protheus.doc} GET
-Get simples sem nenhuma configuração.
+/*/{Protheus.doc} GET UM
+Get específico com path e syntax.
 
 @author Vinicius Ledesma
 @since 01/06/2020
 /*/
 //-------------------------------------------------------------------
-WSMETHOD GET WSRECEIVE page, pageSize, meuFiltro WSSERVICE GetRestClass
-
-Local lRet  as logical
-
-// Path Param
-If Len(::aURLParms) > 0
-    //Trata-se de um Get específico
-    lRet := GetUnico(Self)
-Else
-    //Trata-se de um Get de lista
-    lRet := GetLista(Self)
-EndIf
-
-Return lRet
-
-//-------------------------------------------------------------------
-/*/{Protheus.doc} GetUnico
-Função de busca de um único registro
-
-@author Vinicius Ledesma
-@since 01/06/2020
-/*/
-//-------------------------------------------------------------------
-Static Function GetUnico(oSelf)
+WSMETHOD GET UM WSSERVICE DoisGetsRestClass
 
 Local lRet      as logical
 Local cConteudo as character
 
-cConteudo := "conteudo"//MinhaBusca(oSelf:aURLParms[1])
+cConteudo := "conteudo"//MinhaBusca(::Self:aURLParms[1])
 
 If Empty(cConteudo)
     SetRESTFault(1,"O registro não foi encontrado.",.T.,404)
     lRet := .F.
 Else
-    cConteudo := '{"' + oSelf:aURLParms[1] + '", "valor"}'//MinhaConversaoParaJson(cConteudo)
-    oSelf:SetResponse(cConteudo)
+    cConteudo := '{"' + ::Self:aURLParms[1] + '", "valor"}'//MinhaConversaoParaJson(cConteudo)
+    ::Self:SetResponse(cConteudo)
     lRet := .T.
 EndIf
 
 Return lRet
 
 //-------------------------------------------------------------------
-/*/{Protheus.doc} GetLista
-Função de busca de uma lista de registros
+/*/{Protheus.doc} GET LISTA
+Get lista com path e syntax.
 
 @author Vinicius Ledesma
 @since 01/06/2020
 /*/
 //-------------------------------------------------------------------
-Static Function GetLista(oSelf)
+WSMETHOD GET LISTA WSRECEIVE page, pageSize, meuFiltro WSSERVICE DoisGetsRestClass
 
 Local aConteudo as array
 Local nX        as numeric
 
-aConteudo := {"conteudo1","conteudo2","conteudo3"}//MinhaBuscaTudo(oSelf)
+aConteudo := {"conteudo1","conteudo2","conteudo3"}//MinhaBuscaTudo(::Self)
 
-oSelf:SetResponse('{"Lista": [')
+::Self:SetResponse('{"Lista": [')
 
 For nX := 1 To Len(aConteudo)
-    oSelf:SetResponse('"' + aConteudo[nX] + If(nX < Len(aConteudo), '",', '"'))
+    ::Self:SetResponse('"' + aConteudo[nX] + If(nX < Len(aConteudo), '",', '"'))
 Next nX
 
-oSelf:SetResponse(']}')
+::Self:SetResponse(']}')
 
 Return .T.
 
 //-------------------------------------------------------------------
-/*/{Protheus.doc} MinhaBuscaTudo
-Função de busca de todos os registros
+/*/{Protheus.doc} GetLista
+Função de busca de uma lista de registros
 
 @author Vinicius Ledesma
 @since 01/06/2020
